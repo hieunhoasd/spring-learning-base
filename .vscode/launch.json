@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<HotWhellShop-react-spring-main>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "HotWhellShop_Spring_react.Application",
+            "projectName": "HotWhellShop-react-spring-main",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
