@@ -4,8 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.jspecify.annotations.Nullable;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import HotWhellShop_Spring_react.domain.Meta;
+import HotWhellShop_Spring_react.domain.ResultPaginationDTO;
 import HotWhellShop_Spring_react.domain.User;
 import HotWhellShop_Spring_react.repository.UserRepository;
 import HotWhellShop_Spring_react.util.error.EmailAlreadyExistsException;
@@ -34,8 +40,18 @@ public class UserService {
 
     }
 
-    public List<User> handleGetAllUser() {
-        return this.userRepository.findAll();
+    public ResultPaginationDTO handleGetAllUser(Specification<User> spec, Pageable pageable) {
+        Page<User> pageUser = this.userRepository.findAll(spec, pageable);
+        Meta mt = new Meta();
+        mt.setPage(pageUser.getNumber() + 1);
+        mt.setPageSize(pageUser.getSize());
+        mt.setPages(pageUser.getTotalPages());
+        mt.setTotal(pageUser.getTotalElements());
+
+        ResultPaginationDTO res = new ResultPaginationDTO();
+        res.setMeta(mt);
+        res.setResult(pageUser.getContent());
+        return res;
     }
 
     public User handleUpdateUser(User user) {

@@ -2,12 +2,17 @@ package HotWhellShop_Spring_react.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.turkraft.springfilter.boot.Filter;
+
+import HotWhellShop_Spring_react.domain.ResultPaginationDTO;
 import HotWhellShop_Spring_react.domain.User;
 import HotWhellShop_Spring_react.service.UserService;
 import jakarta.validation.Valid;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,11 +45,13 @@ public class UserController {
     public ResponseEntity<User> GetUserById(@PathVariable long id) {
         User hiu = this.userService.handleGetUserById(id);
         return ResponseEntity.ok(hiu);
+
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<User>> GetAllUser() {
-        return ResponseEntity.ok(this.userService.handleGetAllUser());
+    public ResponseEntity<ResultPaginationDTO> GetAllUser(@Filter Specification<User> spec, Pageable pageable) {
+        ResultPaginationDTO data = this.userService.handleGetAllUser(spec, pageable);
+        return ResponseEntity.ok().body(data);
     }
 
     @PutMapping("/user")
