@@ -33,7 +33,7 @@ public class User {
     @NotBlank(message = "email khong duoc de trong ")
     private String email;
 
-    @Size(min = 1, max = 8)
+    @Size(min = 1, max = 258)
     private String password;
 
 }

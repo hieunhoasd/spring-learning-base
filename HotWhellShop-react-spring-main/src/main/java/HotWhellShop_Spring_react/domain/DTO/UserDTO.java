@@ -1,4 +1,4 @@
-package HotWhellShop_Spring_react.domain;
+package HotWhellShop_Spring_react.domain.DTO;
 
 import lombok.Getter;
 import lombok.Setter;

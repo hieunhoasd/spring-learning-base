@@ -6,10 +6,11 @@ import com.turkraft.springfilter.boot.Filter;
 
 import HotWhellShop_Spring_react.domain.ResultPaginationDTO;
 import HotWhellShop_Spring_react.domain.User;
+import HotWhellShop_Spring_react.domain.DTO.ResGetUserByidDTO;
+import HotWhellShop_Spring_react.domain.DTO.ResUpdateUserDTO;
+import HotWhellShop_Spring_react.domain.DTO.UserDTO;
 import HotWhellShop_Spring_react.service.UserService;
 import jakarta.validation.Valid;
-
-import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -34,17 +35,17 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<User> CreateUser(@Valid @RequestBody User reqUser) {
+    public ResponseEntity<UserDTO> CreateUser(@Valid @RequestBody User reqUser) {
         String passwordEncode = this.passwordEncoder.encode(reqUser.getPassword());
         reqUser.setPassword(passwordEncode);
         User hiu = this.userService.handleCreateUser(reqUser);
-        return ResponseEntity.status(HttpStatus.CREATED).body(hiu);
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.userService.handleConverCreateUserDTO(hiu));
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<User> GetUserById(@PathVariable long id) {
+    public ResponseEntity<ResGetUserByidDTO> GetUserById(@PathVariable long id) {
         User hiu = this.userService.handleGetUserById(id);
-        return ResponseEntity.ok(hiu);
+        return ResponseEntity.ok().body(this.userService.handleConverGetUserByIdDTO(hiu));
 
     }
 
@@ -55,9 +56,9 @@ public class UserController {
     }
 
     @PutMapping("/user")
-    public ResponseEntity<User> UpdateUser(@RequestBody User user) {
+    public ResponseEntity<ResUpdateUserDTO> UpdateUser(@RequestBody User user) {
         User hiu = this.userService.handleUpdateUser(user);
-        return ResponseEntity.ok(hiu);
+        return ResponseEntity.ok().body(this.userService.handleConverUpdateUserDTO(hiu));
     }
 
     @DeleteMapping("/user/{id}")
