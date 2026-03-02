@@ -17,7 +17,7 @@ import HotWhellShop_Spring_react.domain.DTO.ResGetUserByidDTO;
 import HotWhellShop_Spring_react.domain.DTO.ResUpdateUserDTO;
 import HotWhellShop_Spring_react.domain.DTO.UserDTO;
 import HotWhellShop_Spring_react.repository.UserRepository;
-import HotWhellShop_Spring_react.util.error.EmailAlreadyExistsException;
+import HotWhellShop_Spring_react.util.error.Exception.EmailAlreadyExistsException;
 
 @Service
 public class UserService {
@@ -106,6 +106,10 @@ public class UserService {
         res.setId(hiu.getId());
         res.setName(hiu.getName());
         return res;
+    }
+
+    public User handleGetUserByUsername(String username) {
+        return this.userRepository.findByEmail(username);
     }
 
 }

@@ -1,4 +1,4 @@
-package HotWhellShop_Spring_react.util.error;
+package HotWhellShop_Spring_react.util.error.Exception;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -25,6 +27,17 @@ public class GlobalException {
                 .data(null)
                 .message(ex.getMessage())
                 .error("Email fail")
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
+    }
+
+    @ExceptionHandler(value = BadCredentialsException.class)
+    public ResponseEntity<RestResponse<Object>> BadCredentialsException(BadCredentialsException ex) {
+        RestResponse<Object> res = RestResponse.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .data(null)
+                .message(ex.getMessage())
+                .error("thong tin khong dung")
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
     }
