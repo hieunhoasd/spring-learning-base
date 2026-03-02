@@ -2,6 +2,7 @@ package HotWhellShop_Spring_react.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,4 +26,5 @@ public class SecurityConfiguration {
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder(12);
     }
+
 }
