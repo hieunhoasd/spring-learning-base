@@ -39,7 +39,7 @@ public class FormatResponse implements ResponseBodyAdvice<Object> {
 
         RestResponse<Object> res = RestResponse.builder()
                 .status(HttpStatus.OK.value())
-                .message("success")
+                .message("CALL API SUCCESS")
                 .data(body)
                 .error(null)
                 .build();

@@ -31,13 +31,13 @@ public class GlobalException {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
     }
 
-    @ExceptionHandler(value = BadCredentialsException.class)
-    public ResponseEntity<RestResponse<Object>> BadCredentialsException(BadCredentialsException ex) {
+    @ExceptionHandler(value = UsernameNotFoundException.class)
+    public ResponseEntity<RestResponse<Object>> BadCredentialsException(UsernameNotFoundException ex) {
         RestResponse<Object> res = RestResponse.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
                 .data(null)
                 .message(ex.getMessage())
-                .error("thong tin khong dung")
+                .error("Username/password error")
                 .build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
     }

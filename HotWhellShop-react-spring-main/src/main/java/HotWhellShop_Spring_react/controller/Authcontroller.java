@@ -9,22 +9,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import HotWhellShop_Spring_react.domain.LoginDTO;
+import HotWhellShop_Spring_react.domain.ResLoginDTO;
+import HotWhellShop_Spring_react.util.SecurityUtil;
 import jakarta.validation.Valid;
 
 @RestController
 public class Authcontroller {
+    private final SecurityUtil securityUtil;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public Authcontroller(AuthenticationManagerBuilder authenticationManagerBuilder) {
+    public Authcontroller(AuthenticationManagerBuilder authenticationManagerBuilder, SecurityUtil securityUtil) {
         this.authenticationManagerBuilder = authenticationManagerBuilder;
+        this.securityUtil = securityUtil;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginDTO> login(@Valid @RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<ResLoginDTO> login(@Valid @RequestBody LoginDTO loginDTO) {
+        // lay thong tin nguoi dung
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 loginDTO.getUsername(), loginDTO.getPassword());
+
         // xác thực người dùng => cần viết hàm loadUserByUsername
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        return ResponseEntity.ok().body(loginDTO);
+
+        // create token
+
+        String accessToken = this.securityUtil.CreateToken(authentication);
+        ResLoginDTO res = new ResLoginDTO();
+        res.setAccessToken(accessToken);
+        return ResponseEntity.ok().body(res);
     }
 }
