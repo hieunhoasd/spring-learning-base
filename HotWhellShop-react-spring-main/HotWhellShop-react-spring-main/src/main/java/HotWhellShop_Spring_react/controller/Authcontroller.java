@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import HotWhellShop_Spring_react.domain.Login.LoginDTO;
-import HotWhellShop_Spring_react.domain.Login.ResLoginDTO;
+import HotWhellShop_Spring_react.domain.LoginDTO;
+import HotWhellShop_Spring_react.domain.ResLoginDTO;
 import HotWhellShop_Spring_react.util.SecurityUtil;
 import jakarta.validation.Valid;
 

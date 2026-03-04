@@ -3,6 +3,9 @@ package HotWhellShop_Spring_react.util;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
@@ -11,6 +14,8 @@ import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
+
+import com.nimbusds.jose.util.Base64;
 
 @Service
 public class SecurityUtil {
@@ -21,6 +26,9 @@ public class SecurityUtil {
         this.jwtEncoder = jwtEncoder;
     }
 
+    @Value("${hieunumdum.jwt.base64-secret}")
+    private String jwtkey;
+
     @Value("${hieunumdum.jwt.access-token-validity-in-seconds}")
     private long jwtExpiration;
 
@@ -28,7 +36,7 @@ public class SecurityUtil {
         Instant now = Instant.now();
         Instant validity = now.plus(this.jwtExpiration, ChronoUnit.SECONDS);
 
-        JwtClaimsSet payload = JwtClaimsSet.builder()
+        JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuedAt(now)
                 .expiresAt(validity)
                 .subject(authentication.getName())
@@ -37,6 +45,6 @@ public class SecurityUtil {
 
         JwsHeader jwsHeader = JwsHeader.with(JWT_ALGORITHM).build();
 
-        return this.jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, payload)).getTokenValue();
+        return this.jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
     }
 }

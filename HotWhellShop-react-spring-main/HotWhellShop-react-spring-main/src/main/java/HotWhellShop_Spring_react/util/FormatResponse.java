@@ -11,7 +11,7 @@ import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import HotWhellShop_Spring_react.domain.Respsone.RestResponse;
+import HotWhellShop_Spring_react.domain.RestResponse;
 
 @RestControllerAdvice
 public class FormatResponse implements ResponseBodyAdvice<Object> {

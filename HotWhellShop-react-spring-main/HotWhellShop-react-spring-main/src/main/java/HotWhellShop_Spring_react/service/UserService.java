@@ -9,13 +9,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import HotWhellShop_Spring_react.domain.Meta;
+import HotWhellShop_Spring_react.domain.ResultPaginationDTO;
 import HotWhellShop_Spring_react.domain.User;
-import HotWhellShop_Spring_react.domain.DTO.userDTO.ResGetAllUserDTO;
-import HotWhellShop_Spring_react.domain.DTO.userDTO.ResGetUserByidDTO;
-import HotWhellShop_Spring_react.domain.DTO.userDTO.ResUpdateUserDTO;
-import HotWhellShop_Spring_react.domain.DTO.userDTO.UserDTO;
-import HotWhellShop_Spring_react.domain.pagination.Meta;
-import HotWhellShop_Spring_react.domain.pagination.ResultPaginationDTO;
+import HotWhellShop_Spring_react.domain.DTO.ResGetAllUserDTO;
+import HotWhellShop_Spring_react.domain.DTO.ResGetUserByidDTO;
+import HotWhellShop_Spring_react.domain.DTO.ResUpdateUserDTO;
+import HotWhellShop_Spring_react.domain.DTO.UserDTO;
 import HotWhellShop_Spring_react.repository.UserRepository;
 import HotWhellShop_Spring_react.util.error.Exception.EmailAlreadyExistsException;
 

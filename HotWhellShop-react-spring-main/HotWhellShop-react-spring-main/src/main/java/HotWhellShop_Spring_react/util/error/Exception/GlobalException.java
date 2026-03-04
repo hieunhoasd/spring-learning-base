@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.MethodArgumentBuilder;
 
-import HotWhellShop_Spring_react.domain.Respsone.RestResponse;
+import HotWhellShop_Spring_react.domain.RestResponse;
 
 @RestControllerAdvice
 public class GlobalException {

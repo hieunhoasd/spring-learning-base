@@ -4,11 +4,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.turkraft.springfilter.boot.Filter;
 
+import HotWhellShop_Spring_react.domain.ResultPaginationDTO;
 import HotWhellShop_Spring_react.domain.User;
-import HotWhellShop_Spring_react.domain.DTO.userDTO.ResGetUserByidDTO;
-import HotWhellShop_Spring_react.domain.DTO.userDTO.ResUpdateUserDTO;
-import HotWhellShop_Spring_react.domain.DTO.userDTO.UserDTO;
-import HotWhellShop_Spring_react.domain.pagination.ResultPaginationDTO;
+import HotWhellShop_Spring_react.domain.DTO.ResGetUserByidDTO;
+import HotWhellShop_Spring_react.domain.DTO.ResUpdateUserDTO;
+import HotWhellShop_Spring_react.domain.DTO.UserDTO;
 import HotWhellShop_Spring_react.service.UserService;
 import jakarta.validation.Valid;
 
