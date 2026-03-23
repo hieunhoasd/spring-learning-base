@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<spring-learning-base>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "HotWhellShop_Spring_react.Application",
+            "projectName": "spring-learning-base",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": "--add-opens java.base/java.time=ALL-UNNAMED"
+        }
+    ]
+}
