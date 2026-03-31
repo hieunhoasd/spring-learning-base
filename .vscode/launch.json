@@ -10,6 +10,16 @@
             "args": "",
             "envFile": "${workspaceFolder}/.env",
             "vmArgs": "--add-opens java.base/java.time=ALL-UNNAMED"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<demo-spring-learning-base>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "HotWhellShop_Spring_react.Application",
+            "projectName": "demo-spring-learning-base",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

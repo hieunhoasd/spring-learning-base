@@ -17,6 +17,7 @@ import HotWhellShop_Spring_react.domain.Login.LoginDTO;
 import HotWhellShop_Spring_react.domain.Login.ResLoginDTO;
 import HotWhellShop_Spring_react.service.UserService;
 import HotWhellShop_Spring_react.util.SecurityUtil;
+import HotWhellShop_Spring_react.util.error.Exception.EmailAlreadyExistsException;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.CookieValue;
@@ -56,7 +57,7 @@ public class Authcontroller {
                                 currentUserDB.getEmail(),
                                 currentUserDB.getName());
                 res.setUserLogin(userLogin);
-                String accessToken = this.securityUtil.CreateToken(authentication, res.getUserLogin());
+                String accessToken = this.securityUtil.CreateToken(authentication.getName(), res.getUserLogin());
                 res.setAccessToken(accessToken);
 
                 // create refresh token
@@ -93,11 +94,63 @@ public class Authcontroller {
         }
 
         @GetMapping("/refresh")
-        public ResponseEntity<String> getRefreshToken(
+        public ResponseEntity<ResLoginDTO> getRefreshToken(
                         @CookieValue(name = "refreshToken") String refreshToken) {
                 Jwt decodedToken = this.securityUtil.checkvalidRefreshToken(refreshToken);
                 String email = decodedToken.getSubject();
-                return ResponseEntity.ok().body(email);
+
+                User currentUser = this.userService.getUserByRefreshTokenAndEmail(refreshToken, email);
+
+                ResLoginDTO res = new ResLoginDTO();
+                User currentUserDB = this.userService.handleGetUserByUsername(email);
+                ResLoginDTO.UserLogin userLogin = new ResLoginDTO.UserLogin(
+                                currentUserDB.getId(),
+                                currentUserDB.getEmail(),
+                                currentUserDB.getName());
+                res.setUserLogin(userLogin);
+                String accessToken = this.securityUtil.CreateToken(email, res.getUserLogin());
+                res.setAccessToken(accessToken);
+
+                // create refresh token
+                String newrefreshToken = this.securityUtil.CreateRefreshToken(email, res);
+
+                // update user
+                this.userService.updateUserToken(newrefreshToken, email);
+
+                // set cookie
+                ResponseCookie resCookie = ResponseCookie.from("newrefreshToken", newrefreshToken)
+                                .httpOnly(true)
+                                .secure(true)
+                                .path("/")
+                                .maxAge(jwtRefreshExpiration)
+                                .build();
+
+                return ResponseEntity.ok()
+                                .header(HttpHeaders.SET_COOKIE, resCookie.toString())
+                                .body(res);
+        }
+
+        @PostMapping("/logout")
+        public ResponseEntity<Void> logout() {
+                String email = SecurityUtil.getCurrentUserLogin().isPresent() ? SecurityUtil.getCurrentUserLogin().get()
+                                : "";
+
+                if (email.equals("")) {
+                        throw new EmailAlreadyExistsException("accessToken khong hop le");
+                }
+                this.userService.updateUserToken(null, email);
+
+                ResponseCookie deleteSpringCookie = ResponseCookie
+                                .from("refreshToken", null)
+                                .httpOnly(true)
+                                .secure(true)
+                                .path("/")
+                                .maxAge(0)
+                                .build();
+
+                return ResponseEntity.ok()
+                                .header(HttpHeaders.SET_COOKIE, deleteSpringCookie.toString())
+                                .body(null);
         }
 
 }

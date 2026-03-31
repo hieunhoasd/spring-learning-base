@@ -28,7 +28,9 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
                 .oauth2ResourceServer(
-                        (oauth2) -> oauth2.jwt(Customizer.withDefaults()).authenticationEntryPoint(authEntryPoint));
+                        (oauth2) -> oauth2.jwt(Customizer.withDefaults()).authenticationEntryPoint(authEntryPoint))
+                .logout(logout -> logout.disable());
+        ;
         return http.build();
     }
 

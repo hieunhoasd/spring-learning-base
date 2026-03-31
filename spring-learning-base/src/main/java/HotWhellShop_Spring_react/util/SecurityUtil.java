@@ -43,14 +43,14 @@ public class SecurityUtil {
     @Value("${hieunumdum.jwt.base64-secret}")
     private String jwtkey;
 
-    public String CreateToken(Authentication authentication, ResLoginDTO.UserLogin dto) {
+    public String CreateToken(String email, ResLoginDTO.UserLogin dto) {
         Instant now = Instant.now();
         Instant validity = now.plus(this.jwtExpiration, ChronoUnit.SECONDS);
 
         JwtClaimsSet payload = JwtClaimsSet.builder()
                 .issuedAt(now)
                 .expiresAt(validity)
-                .subject(authentication.getName())
+                .subject(email)
                 .claim("user", dto)
                 .build();
 
